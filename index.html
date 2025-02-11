@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ryzon</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="icon" type="image/x-icon" href="./images/user.png">
+        <link
+            href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css"
+            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+
+        <style>
+            .active {
+            background-color: rgba(54, 65, 83, 1);
+            color: white;
+            }
+        </style>
+
+    </head>
+    <body class="bg-gray-100 flex">
+        <!-- Sidebar -->
+        <aside
+            class="bg-gray-900 text-white w-64 p-5 h-screen fixed flex flex-col justify-between">
+            <div>
+                <h2 class="text-xl font-bold">HRMS</h2>
+
+                <!-- Main Menu -->
+                <p class="text-gray-400 uppercase text-xs mb-2 mt-5">Main
+                    Menu</p>
+                <ul>
+                    <li
+                        class="py-2 px-3 flex items-center justify-between">
+                        <span class="space-x-1">
+                            <i class="bx bx-time bx-xs"></i> <a
+                                href="#timetrack">Time
+                                Tracker</a>
+                        </span>
+                        <input type="radio" class="peer hidden" checked />
+                        <span id="status-circle"
+                            class="w-2 h-2 mt-1 border-2 border-green-500 bg-green-500 rounded-full flex items-center justify-center">
+                        </span>
+                    </li>
+                    <li
+                        class="py-2 px-3 rounded cursor-pointer flex items-center space-x-2 hover:bg-gray-700">
+                        <i class="bx bx-calendar bx-xs"></i> <a
+                            href="index.html">Calendar</a>
+                    </li>
+                </ul>
+
+                <!-- Analyze Section -->
+                <p class="text-gray-400 uppercase text-xs mb-2 mt-5">Analyze</p>
+                <ul>
+                    <li
+                        class="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer flex items-center space-x-2">
+                        <i class="bx bx-bar-chart bx-xs"></i>
+                        <a href="#dashboard">Dashboard</a>
+                    </li>
+                    <li
+                        class="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer flex items-center space-x-2">
+                        <i class="bx bx-clipboard bx-xs"></i>
+                        <a href="#timesheet">Timesheet</a>
+                    </li>
+                    <li
+                        class="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer flex items-center space-x-2">
+                        <i class="bx bx-file bx-xs"></i>
+                        <a href="#report">Reports</a>
+                    </li>
+                    <li
+                        class="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer flex items-center space-x-2">
+                        <i class="bx bx-line-chart bx-xs"></i>
+                        <a href="#analytics">Analytics</a>
+                    </li>
+                </ul>
+
+                <!-- Manage Section -->
+                <p class="text-gray-400 uppercase text-xs mb-2 mt-5">Manage</p>
+                <ul>
+                    <li
+                        class="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer flex items-center space-x-2">
+                        <i class="bx bx-folder bx-xs"></i>
+                        <a href="#projects">Projects</a>
+                    </li>
+                    <li
+                        class="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer flex items-center space-x-2">
+                        <i class="bx bx-group bx-xs"></i>
+                        <a href="#team">Team</a>
+                    </li>
+                </ul>
+            </div>
+
+            <ul>
+                <li
+                    class="py-2 px-3 hover:bg-gray-700 rounded cursor-pointer flex items-center space-x-2">
+                    <i class="bx bx-cog bx-xs"></i>
+                    <a href="#">Settings</a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 ml-64 overflow-auto h-screen">
+            <!-- Header -->
+            <div
+                class="flex justify-between items-center bg-white p-4 rounded shadow">
+                <div class="flex space-x-2">
+                    <!-- Example for a single day -->
+                    <div
+                        class="p-2 bg-white shadow rounded-lg text-center w-20">
+                        <p class="text-gray-500 text-sm">Sun</p>
+                        <p class="text-lg font-semibold">Jun 30</p>
+                    </div>
+                    <div
+                        class="p-2 bg-white shadow rounded-lg text-center w-20">
+                        <p class="text-gray-500 text-sm">Mon</p>
+                        <p class="text-lg font-semibold">Jul 01</p>
+                    </div>
+                    <div
+                        class="p-2 bg-white shadow rounded-lg text-center w-20">
+                        <p class="text-gray-500 text-sm">Tue</p>
+                        <p class="text-lg font-semibold">Jul 02</p>
+                    </div>
+                    <div
+                        class="p-2 bg-white shadow rounded-lg text-center w-20">
+                        <p class="text-gray-500 text-sm">Wed</p>
+                        <p class="text-lg font-semibold">Jul 03</p>
+                    </div>
+                    <div
+                        class="p-2 bg-white shadow rounded-lg text-center w-20">
+                        <p class="text-gray-500 text-sm">Thu</p>
+                        <p class="text-lg font-semibold">Jul 04</p>
+                    </div>
+                </div>
+
+                <!-- User & Notification Section -->
+                <div class="flex items-center space-x-5 relative">
+                    <!-- Notification Icon -->
+                    <div class="relative">
+                        <button id="notif-btn" class="text-gray-900 relative">
+                            <i class="bx bx-bell bx-sm"></i>
+                            <span
+                                class="absolute -top-1 right-0 bg-red-600 text-white text-xs px-1 rounded-full">3</span>
+                        </button>
+
+                        <!-- Notification Dropdown -->
+                        <div id="notif-dropdown"
+                            class="hidden absolute right-0 mt-2 w-64 bg-white shadow-md rounded p-3">
+                            <p
+                                class="font-semibold text-gray-700">Notifications</p>
+                            <ul class="mt-2">
+                                <li class="p-2 border-b text-sm">📅 Meeting at 3
+                                    PM</li>
+                                <li class="p-2 border-b text-sm">⏳ Timesheet
+                                    Due</li>
+                                <li class="p-2 text-sm">🎉 Company Event
+                                    Tomorrow</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- User Avatar with Dropdown -->
+                    <div class="relative">
+                        <button id="user-btn"
+                            class="flex items-center space-x-2">
+                            <img src="./images/user.png" alt="User"
+                                class="w-10 h-10 rounded-full">
+                        </button>
+
+                        <!-- User Dropdown -->
+                        <div id="user-dropdown"
+                            class="hidden absolute right-0 mt-2 w-48 bg-white shadow-md rounded p-3">
+                            <p class="font-semibold text-gray-700">John Doe</p>
+                            <ul class="mt-2">
+                                <li
+                                    class="p-2 border-b text-sm cursor-pointer hover:bg-gray-100">Profile</li>
+                                <li
+                                    class="p-2 border-b text-sm cursor-pointer hover:bg-gray-100">Settings</li>
+                                <li
+                                    class="p-2 text-sm cursor-pointer hover:bg-gray-100">Logout</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                <!-- Calendar -->
+                <div class="bg-white p-4 rounded shadow col-span-2">
+                    <h2 class="text-lg font-semibold">Calendar</h2>
+                    <p class="text-gray-600">Upcoming Events</p>
+                    <div id="calendar" class="mt-4"></div>
+                </div>
+
+                <div>
+                    <div class="bg-white p-4 rounded shadow">
+                        <div class="flex">
+                            <h2 class="text-lg font-semibold">Punch In /
+                                Out</h2>
+                            <span id="status-time"
+                                class="ml-auto text-red-600 text-sm">05:01:12</span>
+                        </div>
+                        <p class="text-gray-600">Current Status:
+                            <span id="status-text"
+                                class="font-bold text-green-600">Clocked
+                                In</span>
+                        </p>
+                        <button id="punch-btn"
+                            class="mt-4 border border-red-600 text-red-600 font-bold px-4 py-2 rounded w-full">
+                            Punch Out
+                        </button>
+                    </div>
+
+                    <!-- Activity Log -->
+                    <div class="bg-white p-4 rounded shadow mt-6">
+                        <h2 class="text-lg font-semibold">Recent Activities</h2>
+                        <ul class="mt-2">
+                            <li
+                                class="py-2 border-b flex items-center space-x-2">
+                                <input type="checkbox" class="w-4 h-4" checked>
+                                <span>Clocked In at 9:00 AM</span>
+                            </li>
+                            <li
+                                class="py-2 border-b flex items-center space-x-2">
+                                <input type="checkbox" class="w-4 h-4">
+                                <span>Meeting with HR at 11:00 AM</span>
+                            </li>
+                            <li class="py-2 flex items-center space-x-2">
+                                <input type="checkbox" class="w-4 h-4">
+                                <span>Submitted Leave Request</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-4 shadow-md rounded-lg mt-4">
+                        <h3 class="text-lg font-semibold mb-3">Upcoming Tasks</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center justify-between border-b pb-2">
+                                <span class="text-gray-700">Submit Weekly Report</span>
+                                <span class="text-xs text-blue-500">Due: Feb 12</span>
+                            </li>
+                            <li class="flex items-center justify-between border-b pb-2">
+                                <span class="text-gray-700">Client Meeting</span>
+                                <span class="text-xs text-green-500">Tomorrow</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span class="text-gray-700">Code Review</span>
+                                <span class="text-xs text-red-500">Pending</span>
+                            </li>
+                        </ul>
+                    
+                        <h3 class="text-lg font-semibold mt-4 mb-3">Notifications</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between bg-gray-100 p-2 rounded">
+                                <span class="text-sm text-gray-700">New message from HR</span>
+                                <button class="text-blue-500 text-xs">View</button>
+                            </div>
+                            <div class="flex items-center justify-between bg-gray-100 p-2 rounded">
+                                <span class="text-sm text-gray-700">Leave request approved</span>
+                                <button class="text-blue-500 text-xs">Check</button>
+                            </div>
+                        </div>
+                    
+                        <h3 class="text-lg font-semibold mt-4 mb-3">Quick Actions</h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="bg-blue-500 text-white py-2 rounded text-sm">Add Task</button>
+                            <button class="bg-green-500 text-white py-2 rounded text-sm">Request Leave</button>
+                            <button class="bg-yellow-500 text-white py-2 rounded text-sm">View Reports</button>
+                            <button class="bg-red-500 text-white py-2 rounded text-sm">Logout</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </main>
+
+        <!-- FullCalendar JS -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+
+        <script>
+    function setActive(element) {
+        // Remove active class from all sidebar items
+        document.querySelectorAll("aside ul li").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        // Add active class to the clicked item
+        element.classList.add("active");
+
+        // Store active menu item in local storage (to keep active state after refresh)
+        localStorage.setItem("activeMenu", element.innerText.trim());
+    }
+
+    // Retain active class on page load
+document.addEventListener('DOMContentLoaded', function() {
+    var punchButton = document.getElementById('punch-btn');
+    var statusText = document.getElementById('status-text');
+    var statusTime = document.getElementById('status-time');
+    var statusCircle = document.getElementById('status-circle');
+    
+    // Load state from localStorage
+    var isClockedIn = localStorage.getItem('isClockedIn') === 'true';
+    updatePunchState(isClockedIn);
+
+    // Toggle Punch In/Out
+    punchButton.addEventListener('click', function () {
+        isClockedIn = !isClockedIn;
+        updatePunchState(isClockedIn);
+        localStorage.setItem('isClockedIn', isClockedIn);
+    });
+
+    function updatePunchState(clockIn) {
+        if (clockIn) {
+            punchButton.innerText = "Punch Out";
+            punchButton.classList.remove("border-green-600", "text-green-600");
+            punchButton.classList.add("border-red-600", "text-red-600");
+
+            statusText.innerText = "Clocked In";
+            statusText.classList.remove("text-red-600");
+            statusText.classList.add("text-green-600");
+
+            statusCircle.classList.remove("border-red-500", "bg-red-500");
+            statusCircle.classList.add("border-green-500", "bg-green-500");
+        } else {
+            punchButton.innerText = "Punch In";
+            punchButton.classList.remove("border-red-600", "text-red-600");
+            punchButton.classList.add("border-green-600", "text-green-600");
+
+            statusText.innerText = "Clocked Out";
+            statusText.classList.remove("text-green-600");
+            statusText.classList.add("text-red-600");
+
+            statusCircle.classList.remove("border-green-500", "bg-green-500");
+            statusCircle.classList.add("border-red-500", "bg-red-500");
+        }
+
+        // Update time
+        var now = new Date().toLocaleTimeString();
+        statusTime.innerText = now;
+    }
+});
+
+    document.getElementById('notif-btn').addEventListener('click', function () {
+        document.getElementById('notif-dropdown').classList.toggle('hidden');
+    });
+
+    // Toggle User Dropdown
+    document.getElementById('user-btn').addEventListener('click', function () {
+        document.getElementById('user-dropdown').classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+        if (!document.getElementById('notif-btn').contains(event.target)) {
+            document.getElementById('notif-dropdown').classList.add('hidden');
+        }
+        if (!document.getElementById('user-btn').contains(event.target)) {
+            document.getElementById('user-dropdown').classList.add('hidden');
+        }
+    });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [
+                    { title: 'Meeting with HR', start: '2025-02-15' },
+                    { title: 'Project Deadline', start: '2025-02-20' },
+                    { title: 'Company Event', start: '2025-02-25' },
+                    { title: 'User1 Birthday', start: '2025-02-13' }
+                ]
+            });
+            calendar.render();
+        });
+    </script>
+    </body>
+</html>
