@@ -11,8 +11,9 @@
             rel="stylesheet">
         <link rel="stylesheet"
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
-            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap"
+            rel="stylesheet">
 
         <style>
             .active {
@@ -25,6 +26,22 @@
         .sidebar-closed {
             transform: translateX(-100%);
         }
+        .dropdown-menu {
+                min-width: 200px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                transform-origin: top right;
+                position: absolute;
+                right: 0;
+                top: 100%;
+                margin-top: 0.5rem;
+            }
+            
+            /* Ensure dropdown content is properly layered */
+            .dropdown-container {
+                position: relative;
+            }
         </style>
 
     </head>
@@ -36,21 +53,50 @@
         <!-- Hamburger Menu Button (visible only on mobile) -->
         <div
             class="md:hidden fixed top-0 left-0 right-0 bg-gray-900 text-white h-16 flex items-center justify-between px-4 z-30">
-            <!-- <h2 class="text-xl font-bold">HRMS</h2> -->
             <button id="hamburger" class="p-2">
                 <i class="bx bx-menu bx-sm"></i>
             </button>
             <div class="flex space-x-3">
-                <button id="notif-btn" class="text-white-900 relative mt-1">
-                    <i class="bx bx-bell bx-sm"></i>
-                    <span
-                        class="absolute -top-1 right-0 bg-red-600 text-white text-xs px-1 rounded-full">3</span>
-                </button>
-                <button id="user-btn"
-                    class="flex items-center space-x-2">
-                    <img src="./images/user.png" alt="User"
-                        class="w-7 h-7 rounded-full">
-                </button>
+                <div class="relative">
+                    <button id="mobile-notif-btn"
+                        class="text-white-900 relative mt-1">
+                        <i class="bx bx-bell bx-sm"></i>
+                        <span
+                            class="absolute -top-1 right-0 bg-red-600 text-white text-xs px-1 rounded-full">3</span>
+                    </button>
+                    <div id="mobile-notif-dropdown"
+                        class="hidden dropdown-menu rounded p-3 z-50 w-64 mt-4">
+                        <p class="font-semibold text-gray-700">Notifications</p>
+                        <ul class="mt-2">
+                            <li class="p-2 text-black border-b text-sm">📅
+                                Meeting at 3 PM</li>
+                            <li class="p-2 text-black border-b text-sm">⏳
+                                Timesheet Due</li>
+                            <li class="p-2 text-black text-sm">🎉 Company Event
+                                Tomorrow</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="relative">
+                    <button id="mobile-user-btn"
+                        class="flex items-center space-x-2">
+                        <img src="./images/user.png" alt="User"
+                            class="w-7 h-7 rounded-full">
+                    </button>
+                    <!-- Mobile User Dropdown -->
+                    <div id="mobile-user-dropdown"
+                        class="hidden dropdown-menu p-3 z-50 mt-4">
+                        <p class="font-semibold text-gray-700">John Doe</p>
+                        <ul class="mt-2">
+                            <li
+                                class="p-2 text-black border-b text-sm cursor-pointer hover:bg-gray-100">Profile</li>
+                            <li
+                                class="p-2 text-black border-b text-sm cursor-pointer hover:bg-gray-100">Settings</li>
+                            <li
+                                class="p-2 text-black text-sm cursor-pointer hover:bg-gray-100">Logout</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -194,7 +240,7 @@
 
                         <!-- Notification Dropdown -->
                         <div id="notif-dropdown"
-                            class="hidden absolute right-0 mt-2 w-64 bg-white shadow-md rounded p-3">
+                            class="hidden dropdown-menu z-50 p-3">
                             <p
                                 class="font-semibold text-gray-700">Notifications</p>
                             <ul class="mt-2">
@@ -218,7 +264,7 @@
 
                         <!-- User Dropdown -->
                         <div id="user-dropdown"
-                            class="hidden absolute right-0 mt-2 w-48 bg-white shadow-md rounded p-3">
+                            class="hidden dropdown-menu p-3">
                             <p class="font-semibold text-gray-700">John Doe</p>
                             <ul class="mt-2">
                                 <li
@@ -237,10 +283,8 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
                 <!-- Calendar -->
                 <div
-                    class="bg-white p-4 rounded shadow lg:col-span-2 md:w-full">
+                    class="bg-white p-4 rounded shadow lg:col-span-2 md:w-full h-fit">
                     <!-- col-span-2  -->
-                    <h2 class="text-lg font-semibold">Calendar</h2>
-                    <p class="text-gray-600">Upcoming Events</p>
                     <div id="calendar" class="mt-4"></div>
                 </div>
 
@@ -328,22 +372,6 @@
                             </div>
                         </div>
 
-                        <h3 class="text-lg font-semibold mt-4 mb-3">Quick
-                            Actions</h3>
-                        <div class="grid grid-cols-2 gap-2">
-                            <a href="#task"
-                                class="bg-blue-500 text-white py-2 rounded text-sm text-center block">Add
-                                Task</a>
-                            <a href="#leave"
-                                class="bg-green-500 text-white py-2 rounded text-sm text-center block">Request
-                                Leave</a>
-                            <a href="#reports"
-                                class="bg-yellow-500 text-white py-2 rounded text-sm text-center block">View
-                                Reports</a>
-                            <a href="#login"
-                                class="bg-red-500 text-white py-2 rounded text-sm text-center block">Logout</a>
-                        </div>
-
                     </div>
 
                 </div>
@@ -355,32 +383,6 @@
             src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 
         <script>
- const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('close-sidebar');
-        const overlay = document.getElementById('overlay');
-
-        function toggleSidebar() {
-            sidebar.classList.toggle('sidebar-open');
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-            document.body.classList.toggle('overflow-hidden');
-        }
-
-        hamburger.addEventListener('click', toggleSidebar);
-        closeSidebar.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
-
-        // Close sidebar on window resize if we're above mobile breakpoint
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                sidebar.classList.remove('sidebar-open');
-                overlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }
-        });
-
-
     function setActive(element) {
         // Remove active class from all sidebar items
         document.querySelectorAll("aside ul li").forEach(item => {
@@ -398,7 +400,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     var punchButton = document.getElementById('punch-btn');
     var statusText = document.getElementById('status-text');
-    var statusTime = document.getElementById('status-time');
     var statusCircle = document.getElementById('status-circle');
     
     // Load state from localStorage
@@ -437,57 +438,144 @@ document.addEventListener('DOMContentLoaded', function() {
             statusCircle.classList.add("border-red-500", "bg-red-500");
         }
 
-        // Update time
-        var now = new Date().toLocaleTimeString();
-        statusTime.innerText = now;
     }
 });
 
-    document.getElementById('notif-btn').addEventListener('click', function () {
-        document.getElementById('notif-dropdown').classList.toggle('hidden');
-    });
+document.addEventListener("DOMContentLoaded", function () {
+                // Mobile dropdown elements
+                const mobileNotifBtn = document.getElementById("mobile-notif-btn");
+                const mobileNotifDropdown = document.getElementById("mobile-notif-dropdown");
+                const mobileUserBtn = document.getElementById("mobile-user-btn");
+                const mobileUserDropdown = document.getElementById("mobile-user-dropdown");
+                
+                // Desktop dropdown elements
+                const notifBtn = document.getElementById("notif-btn");
+                const notifDropdown = document.getElementById("notif-dropdown");
+                const userBtn = document.getElementById("user-btn");
+                const userDropdown = document.getElementById("user-dropdown");
 
-    // Toggle User Dropdown
-    document.getElementById('user-btn').addEventListener('click', function () {
-        document.getElementById('user-dropdown').classList.toggle('hidden');
-    });
+                // Function to close all dropdowns
+                function closeAllDropdowns() {
+                    [mobileNotifDropdown, mobileUserDropdown, notifDropdown, userDropdown].forEach(dropdown => {
+                        if (dropdown) dropdown.classList.add("hidden");
+                    });
+                }
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (event) {
-        if (!document.getElementById('notif-btn').contains(event.target)) {
-            document.getElementById('notif-dropdown').classList.add('hidden');
-        }
-        if (!document.getElementById('user-btn').contains(event.target)) {
-            document.getElementById('user-dropdown').classList.add('hidden');
-        }
-    });
+                // Toggle function with improved event handling
+                function setupDropdown(button, dropdown) {
+                    if (!button || !dropdown) return;
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: [
-                {
+                    button.addEventListener("click", function (event) {
+                        event.stopPropagation();
+                        
+                        // Close other dropdowns
+                        closeAllDropdowns();
+                        
+                        // Toggle current dropdown
+                        dropdown.classList.toggle("hidden");
+                    });
+                }
+
+                // Setup all dropdowns
+                setupDropdown(mobileNotifBtn, mobileNotifDropdown);
+                setupDropdown(mobileUserBtn, mobileUserDropdown);
+                setupDropdown(notifBtn, notifDropdown);
+                setupDropdown(userBtn, userDropdown);
+
+                // Close dropdowns when clicking outside
+                document.addEventListener("click", function (event) {
+                    if (!event.target.closest('.relative')) {
+                        closeAllDropdowns();
+                    }
+                });
+
+                // Existing hamburger menu code
+                const hamburger = document.getElementById('hamburger');
+                const sidebar = document.getElementById('sidebar');
+                const closeSidebar = document.getElementById('close-sidebar');
+                const overlay = document.getElementById('overlay');
+
+                function toggleSidebar() {
+                    sidebar.classList.toggle('sidebar-open');
+                    sidebar.classList.toggle('-translate-x-full');
+                    overlay.classList.toggle('hidden');
+                    document.body.classList.toggle('overflow-hidden');
+                    closeAllDropdowns(); // Close dropdowns when toggling sidebar
+                }
+
+                hamburger.addEventListener('click', toggleSidebar);
+                closeSidebar.addEventListener('click', toggleSidebar);
+                overlay.addEventListener('click', toggleSidebar);
+
+                // Close sidebar on window resize
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth >= 768) {
+                        sidebar.classList.remove('sidebar-open');
+                        overlay.classList.add('hidden');
+                        document.body.classList.remove('overflow-hidden');
+                        closeAllDropdowns();
+                    }
+                });
+            });
+
+// calendar
+            document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: [
+            {
                 title: 'Meeting with HR',
                 start: '2025-02-15',
-                color: 'transparent',
-                classNames: ['bg-blue-500', 'text-white', 'border-blue-500', 'rounded-md', 'p-1']
+                backgroundColor: '#3B82F6', 
+                textColor: '#FFFFFF',
+                borderColor: '#3B82F6'
             },
             {
                 title: 'Project Deadline',
                 start: '2025-02-20',
-                color: 'transparent',
-                classNames: ['bg-red-500', 'text-white', 'border-red-500', 'rounded-md', 'p-1']
+                backgroundColor: '#dc2626',
+                textColor: '#FFFFFF',
+                borderColor: '#dc2626'
             },
-                    { title: 'Company Event', start: '2025-02-25' },
-                    { title: 'User1 Birthday', start: '2025-02-13' }
-                ],
-                eventDidMount: function (info) {
-            info.el.classList.add('bg-green-500', 'text-white', 'border-green-500', 'rounded-lg', 'p-1');
-        } 
-            });
-            calendar.render();
-        });
+            { 
+                title: 'Company Event', 
+                start: '2025-02-25',
+                backgroundColor: '#16a34a',
+                textColor: '#FFFFFF',
+                borderColor: '#16a34a'
+            },
+            { 
+                title: 'User1 Birthday', 
+                start: '2025-02-13',
+                backgroundColor: '#111827',
+                textColor: '#FFFFFF',
+                borderColor: '#111827'
+            }
+        ],
+        eventDidMount: function(info) {
+            info.el.style.backgroundColor = info.event.backgroundColor;
+            info.el.style.color = info.event.textColor;
+            info.el.style.borderColor = info.event.borderColor;
+        }
+    });
+    calendar.render();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  function adjustToolbarLayout() {
+    const toolbar = document.querySelector(".fc-toolbar");
+    if (window.innerWidth < 640) { // Tailwind sm breakpoint
+      toolbar.classList.add("flex", "flex-col");
+    } else {
+      toolbar.classList.remove("flex", "flex-col");
+    }
+  }
+  
+  adjustToolbarLayout();
+  window.addEventListener("resize", adjustToolbarLayout);
+});
+
     </script>
     </body>
 </html>
